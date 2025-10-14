@@ -3,33 +3,39 @@ package biblioteca.simple.modelo;
 public abstract class Producto {
     protected int id;
     protected String titulo;
-    protected String fechaLanzamiento;
+    protected String anyo;
     protected FORMATO formato;
 
-    public Producto(String titulo, String fechaLanzamiento, FORMATO formato) {
+    protected Producto(String titulo, String anyo, FORMATO formato) {
         this.titulo = titulo;
-        this.fechaLanzamiento = fechaLanzamiento;
+        this.anyo = anyo;
         this.formato = formato;
     }
 
-    public Producto(int id, String titulo, String fechaLanzamiento, FORMATO formato) {
+    protected Producto(int id, String titulo, String anyo, FORMATO formato) {
         this.id = id;
         this.titulo = titulo;
-        this.fechaLanzamiento = fechaLanzamiento;
+        this.anyo = anyo;
         this.formato = formato;
     }
 
-    public int getId() { return id; }
+    protected abstract int calcularPenalizacion();
 
-    public String getTitulo() { return titulo; }
+    protected int getId() { return id; }
 
-    public String getFechaLanzamiento() { return fechaLanzamiento; }
+    protected String getTitulo() { return titulo; }
 
-    public FORMATO getFormato() { return formato; }
+    protected String getAnyo() { return anyo; }
 
-    public void setTitulo(String titulo) { this.titulo = titulo; }
+    protected FORMATO getFormato() { return formato; }
 
-    public void setFormato(FORMATO formato) { this.formato = formato; }
-
-    public void setFechaLanzamiento(String fechaLanzamiento) { this.fechaLanzamiento = fechaLanzamiento; }
+    @Override
+    public String toString() {
+        return "Producto{" +
+                "id=" + id +
+                ", titulo='" + titulo + '\'' +
+                ", anyo='" + anyo + '\'' +
+                ", formato=" + formato +
+                '}';
+    }
 }
