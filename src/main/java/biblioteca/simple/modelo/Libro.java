@@ -47,6 +47,7 @@ public class Libro extends Producto implements Prestable {
 
     @Override
     public String toString() {
+        // En caso de que el padre tenga los atributos con private debemos usar super()
         return "Libro{" +
                 "autor='" + autor + '\'' +
                 ", isbn='" + isbn + '\'' +

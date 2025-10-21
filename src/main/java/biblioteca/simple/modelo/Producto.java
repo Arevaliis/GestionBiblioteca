@@ -23,9 +23,9 @@ public abstract class Producto {
 
     protected int getId() { return id; }
 
-    protected String getTitulo() { return titulo; }
+    public String getTitulo() { return titulo; }
 
-    protected String getAnyo() { return anyo; }
+    public String getAnyo() { return anyo; }
 
     protected FORMATO getFormato() { return formato; }
 
