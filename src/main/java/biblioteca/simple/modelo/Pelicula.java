@@ -25,7 +25,7 @@ public class Pelicula extends Producto implements Prestable {
 
     public int getMinutosDuracion() { return minutosDuracion; }
 
-    public int calcularPenalizacion(){}
+    // public int calcularPenalizacion(){}
 
     @Override
     public boolean estaPrestado(){return this.prestado; }

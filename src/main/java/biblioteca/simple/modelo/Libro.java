@@ -24,7 +24,7 @@ public class Libro extends Producto implements Prestable {
 
     public String getIsbn() { return isbn; }
 
-    public int calcularPenalizacion(){}
+    // public int calcularPenalizacion(){}
 
     @Override
     public void prestar(Usuario usuario) {

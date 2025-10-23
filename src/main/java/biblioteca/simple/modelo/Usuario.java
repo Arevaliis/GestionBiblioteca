@@ -1,5 +1,7 @@
 package biblioteca.simple.modelo;
 
+import java.util.Objects;
+
 public class Usuario {
     private int id;
     private String nombre;
@@ -18,5 +20,4 @@ public class Usuario {
     public int getId() { return id; }
 
     public void setNombre(String nombre) { this.nombre = nombre; }
-
 }

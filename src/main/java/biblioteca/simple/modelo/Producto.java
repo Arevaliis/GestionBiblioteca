@@ -19,7 +19,7 @@ public abstract class Producto {
         this.formato = formato;
     }
 
-    protected abstract int calcularPenalizacion();
+    // protected abstract int calcularPenalizacion();
 
     protected int getId() { return id; }
 
