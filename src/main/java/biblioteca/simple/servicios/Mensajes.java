@@ -11,7 +11,6 @@ public class Mensajes {
                     4. Prestar
                     5. Devolver
                     6. Salir
-            
             """;
 
     public static final String OPCION_FUERA_DE_RANGO = "La opción elegida esta fuera del rango de opciones válida.";

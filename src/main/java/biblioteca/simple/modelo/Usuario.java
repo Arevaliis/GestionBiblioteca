@@ -1,7 +1,5 @@
 package biblioteca.simple.modelo;
 
-import java.util.Objects;
-
 public class Usuario {
     private int id;
     private String nombre;
