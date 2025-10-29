@@ -25,12 +25,4 @@ public class Catalogo {
                         .filter(producto -> Integer.parseInt(producto.getAnyo()) == anyo)
                         .toList();
     }
-
-    public void mostrar(List<Producto> productos){
-
-        List<String> frases = productos.stream().map(Producto::toString).toList();
-        String mensaje = String.join("\n", frases);
-
-        JOptionPane.showMessageDialog(null, mensaje, "Prestamos Registrados", JOptionPane.INFORMATION_MESSAGE);
-    }
 }

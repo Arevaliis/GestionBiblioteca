@@ -11,9 +11,10 @@ public class Mensajes {
                     4. Prestar
                     5. Devolver
                     6. Salir
+            
             """;
 
     public static final String OPCION_FUERA_DE_RANGO = "La opción elegida esta fuera del rango de opciones válida.";
     public static final String ERROR_DATO_NO_VALIDO = "Debe ingresar un número.";
-    public static final String VOLVER_MENU = "¿Desea volver al menu principal?";
+    public static final String ERROR_BBDD_VACIA = "El catálogo está vacío";
 }

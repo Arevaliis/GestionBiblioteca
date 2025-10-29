@@ -12,22 +12,6 @@ public class Input {
         return -1;
     }
 
-    public static boolean seguirEjecutando(String mensaje){
-
-        int resultado = JOptionPane.showOptionDialog(
-                null,
-                mensaje,
-                "Continuar",
-                JOptionPane.YES_NO_OPTION,
-                JOptionPane.QUESTION_MESSAGE,
-                null,
-                null,
-                null
-        );
-
-        return resultado == JOptionPane.YES_OPTION;
-    }
-
     public static String ingresarTitulo(){
         String titulo = JOptionPane.showInputDialog(null, "Ingrese el titulo a buscar: ", "Buscar por Titulo", JOptionPane.QUESTION_MESSAGE);
 

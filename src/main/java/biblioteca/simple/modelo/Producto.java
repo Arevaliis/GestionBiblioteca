@@ -19,8 +19,6 @@ public abstract class Producto {
         this.formato = formato;
     }
 
-    // protected abstract int calcularPenalizacion();
-
     protected int getId() { return id; }
 
     public String getTitulo() { return titulo; }

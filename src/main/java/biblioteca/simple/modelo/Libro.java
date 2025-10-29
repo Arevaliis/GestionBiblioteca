@@ -24,8 +24,6 @@ public class Libro extends Producto implements Prestable {
 
     public String getIsbn() { return isbn; }
 
-    // public int calcularPenalizacion(){}
-
     @Override
     public void prestar(Usuario usuario) {
         if (prestado) throw new IllegalStateException("Libro ya prestado.");
@@ -47,7 +45,6 @@ public class Libro extends Producto implements Prestable {
 
     @Override
     public String toString() {
-        // En caso de que el padre tenga los atributos con private debemos usar super()
         return "Libro{" +
                 "autor='" + autor + '\'' +
                 ", isbn='" + isbn + '\'' +
