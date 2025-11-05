@@ -121,7 +121,7 @@ public class Main {
      * Muestra los productos cuyo título contiene la palabra ingresada por el usuario.
      */
     private static void buscarPorTitulo() {
-        String titulo = Input.ingresarTitulo();
+        String titulo = Input.ingresarTexto(Mensajes.INGRESAR_TITULO_BUSQUEDA, Mensajes.TITULO_BUSCAR_TITULO);
         List<Producto> lista = catalogo.buscar(titulo);
         mostrar(lista);
     }
@@ -154,14 +154,17 @@ public class Main {
         Usuario uEncontrado = usuarios.buscarUsuario(idUsuario);
 
         if (uEncontrado == null){
-            throw new IllegalStateException(Mensajes.ID_NO_ENCONTRADO);
+            JOptionPane.showMessageDialog(null, Mensajes.ID_NO_ENCONTRADO, Mensajes.TITULO_RESERVAR_PRODUCTO, JOptionPane.WARNING_MESSAGE);
+
+            if (Input.confirmarAgregarNuevoUsuario()){ altaUsuario(); }
+            return;
         }
 
         // PRÉSTAMO
         Prestable p =  (Prestable) pEncontrado;
         p.prestar(uEncontrado);
 
-        JOptionPane.showMessageDialog(null, Mensajes.PRESTAMO_EXITO, "Prestamo Realizado", JOptionPane.INFORMATION_MESSAGE );
+        JOptionPane.showMessageDialog(null, Mensajes.PRESTAMO_EXITO, "Préstamo Realizado", JOptionPane.INFORMATION_MESSAGE );
 
     }
 
@@ -181,10 +184,18 @@ public class Main {
         Prestable p =  (Prestable) pEncontrado;
         p.devolver();
 
-        JOptionPane.showMessageDialog(null, Mensajes.DEVOLUCION_EXITO, "Prestamo Realizado", JOptionPane.INFORMATION_MESSAGE );
+        JOptionPane.showMessageDialog(null, Mensajes.DEVOLUCION_EXITO, Mensajes.DEVOLUCION_EXITO, JOptionPane.INFORMATION_MESSAGE );
     }
 
-    private static void altaUsuario(){}
+    /**
+     * Permite crear un nuevo usuario
+     */
+    private static void altaUsuario(){
+        int id = usuarios.listar().size() + 1;
+        String nombre = Input.ingresarTexto(Mensajes.INGRESAR_NOMBRE_USUARIO, Mensajes.TITULO_ALTA_USUARIO);
+
+        usuarios.alta(new Usuario(id, nombre));
+    }
 
     /**
      * Muestra una lista de productos o usuarios en una ventana emergente.

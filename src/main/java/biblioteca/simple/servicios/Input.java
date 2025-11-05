@@ -24,18 +24,21 @@ public class Input {
     }
 
     /**
-     * Muestra un cuadro de diálogo para que el usuario ingrese un título a buscar.Si no ingresa ningún valor
-     * se lanzará una excepción {@link IllegalStateException}.
+     *  Muestra un cuadro de diálogo para que el usuario ingrese un texto  título o nombre). Si no ingresa ningún valor se lanzará una excepción {@link IllegalStateException}.
      *
-     * @return el título ingresado por el usuario, o cadena vacía {@code ""} si cancela
+     * @param mensaje Texto que se mostrará antes del campo de entrada
+     * @param titulo título de la ventana emergente
+     *
+     * @return Texto ingresado por el usuario, o cadena vacía {@code ""} si cancela
+     *
      * @throws IllegalStateException si el producto es null o está vacío.
      */
-    public static String ingresarTitulo() {
-        String titulo = JOptionPane.showInputDialog(null, "Ingrese el titulo a buscar: ", "Buscar por Titulo", JOptionPane.QUESTION_MESSAGE);
+    public static String ingresarTexto(String mensaje, String titulo) {
+        String entrada = JOptionPane.showInputDialog(null, mensaje, titulo, JOptionPane.QUESTION_MESSAGE);
 
-        if (titulo.isEmpty()) throw new IllegalStateException("Debe ingresar un titulo.");
+        if (entrada == null || entrada.isEmpty()) { throw new IllegalStateException("Debe ingresar un valor."); }
 
-        return titulo;
+        return entrada;
     }
 
     /**
@@ -77,5 +80,22 @@ public class Input {
         }
 
         return Integer.parseInt(input);
+    }
+
+    /**
+     * Muestra un cuadro de diálogo de confirmación para agregar un nuevo usuario.
+     *
+     * @return True si es 0 si no False
+     */
+    public static boolean confirmarAgregarNuevoUsuario(){
+        int opcion = JOptionPane.showConfirmDialog(
+                null,
+                "¿Desea agregar al nuevo usuario?",
+                "Agregar Usuario",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE
+        );
+
+        return 0 == opcion;
     }
 }

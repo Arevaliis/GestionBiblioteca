@@ -50,4 +50,17 @@ public class Mensajes {
 
     /** Mensaje mostrado en el cuadro de diálogo al solicitar el ID de un usuario. */
     public static final String INGRESAR_ID_USUARIO = "Ingrese el id del usuario: ";
+
+    /** Mensaje mostrado en el cuadro de diálogo al solicitar el nombre de un nuevo usuario. */
+    public static final String INGRESAR_NOMBRE_USUARIO = "Ingrese el nombre del nuevo usuario: ";
+
+    /** Título de la ventana emergente utilizada para dar de alta un nuevo usuario. */
+    public static final String TITULO_ALTA_USUARIO = "Alta Usuario";
+
+    /** Mensaje mostrado en el cuadro de diálogo al solicitar el título de un producto para buscarlo. */
+    public static final String INGRESAR_TITULO_BUSQUEDA = "Ingrese el título a buscar: ";
+
+    /** Título de la ventana emergente utilizada para buscar un producto por título. */
+    public static final String TITULO_BUSCAR_TITULO = "Buscar por Título";
+
 }
