@@ -16,7 +16,8 @@ public class Mensajes {
                     3. Buscar por año
                     4. Prestar
                     5. Devolver
-                    6. Salir
+                    6. Alta Usuario
+                    0. Salir
             
             """;
 
@@ -31,4 +32,22 @@ public class Mensajes {
 
     /** Mensaje mostrado cuando el usuario decide salir del programa. */
     public static final String SALIR = "Saliendo del programa";
+
+    /** Mensaje mostrado cuando una operación de préstamo se realiza correctamente. */
+    public static final String PRESTAMO_EXITO = "El producto ha sido prestado con éxito.";
+
+    /** Mensaje mostrado cuando una operación de devolución se realiza correctamente. */
+    public static final String DEVOLUCION_EXITO = "El producto ha sido devuelto con éxito.";
+
+    /** Mensaje mostrado cuando el identificador ingresado no coincide con ningún registro. */
+    public static final String ID_NO_ENCONTRADO = "El id ingresado no coincide.";
+
+    /** Mensaje mostrado en el cuadro de diálogo al solicitar el ID de un producto. */
+    public static final String INGRESAR_ID_PRODUCTO = "Ingrese el id del producto: ";
+
+    /** Título de la ventana emergente utilizada para solicitar el ID de un producto. */
+    public static final String TITULO_RESERVAR_PRODUCTO = "Reservar Producto";
+
+    /** Mensaje mostrado en el cuadro de diálogo al solicitar el ID de un usuario. */
+    public static final String INGRESAR_ID_USUARIO = "Ingrese el id del usuario: ";
 }

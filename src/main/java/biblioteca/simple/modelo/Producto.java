@@ -49,7 +49,7 @@ public abstract class Producto {
     }
 
     /** Devuelve el ID del producto */
-    protected int getId() { return id; }
+    public int getId() { return id; }
 
     /** Devuelve el título del producto */
     public String getTitulo() { return titulo; }

@@ -87,6 +87,7 @@ public class Pelicula extends Producto implements Prestable {
      */
     @Override
     public void devolver() {
+        if (!prestado) throw new IllegalStateException("Película no está prestada.");
 
         this.prestado = false;
         this.prestadoA = null;
@@ -108,13 +109,11 @@ public class Pelicula extends Producto implements Prestable {
      */
     @Override
     public String toString() {
-        return "Pelicula{" +
-                "director='" + director + '\'' +
-                ", minutosDuracion=" + minutosDuracion +
-                ", formato=" + formato +
-                ", anyo='" + anyo + '\'' +
-                ", titulo='" + titulo + '\'' +
-                ", id=" + id +
-                '}';
+        return "ID: " + id +
+                " | Título: " + titulo +
+                " | Director: " + director +
+                " | Año: " + anyo +
+                " | Duración: " + minutosDuracion + " min" +
+                " | Formato: " + formato;
     }
 }

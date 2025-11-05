@@ -5,9 +5,9 @@ import biblioteca.simple.modelo.*;
 import biblioteca.simple.servicios.Catalogo;
 import biblioteca.simple.servicios.Input;
 import biblioteca.simple.servicios.Mensajes;
+import biblioteca.simple.servicios.Usuarios;
 
 import javax.swing.*;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,7 +19,7 @@ import java.util.List;
  */
 public class Main {
     private static final Catalogo catalogo = new Catalogo();
-    private static final List<Usuario> usuarios = new ArrayList<>();
+    private static final Usuarios usuarios = new Usuarios();
 
     /**
      * Metodo principal del programa, se encarga de cargar los datos dentro del catálogo y mantiene la
@@ -56,11 +56,11 @@ public class Main {
         catalogo.alta(new Videojuego(15, "Pokémon Escarlata", "2022", FORMATO.FISICO, "Nintendo Switch", "Rol"));
 
         // Usuarios
-        new Usuario(1, "Ana López");
-        new Usuario(2, "Carlos Pérez");
-        new Usuario(3, "María Gómez");
-        new Usuario(4, "Juan Rodríguez");
-        new Usuario(5, "Lucía Fernández");
+        usuarios.alta(new Usuario(1, "Ana López"));
+        usuarios.alta(new Usuario(2, "Carlos Pérez"));
+        usuarios.alta(new Usuario(3, "María Gómez"));
+        usuarios.alta(new Usuario(4, "Juan Rodríguez"));
+        usuarios.alta(new Usuario(5, "Lucía Fernández"));
     }
 
     /**
@@ -73,14 +73,21 @@ public class Main {
 
         do {
             try{
+
                 opc = Input.elegir_opcion(Mensajes.MENU_PRINCIPAL, "Menu");
                 ejecutarOpcion(opc);
+
             }catch (IllegalArgumentException e){
+
                 JOptionPane.showMessageDialog(null, Mensajes.ERROR_DATO_NO_VALIDO, "Error", JOptionPane.ERROR_MESSAGE );
+
             }catch (IllegalStateException e){
+
                 JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE );
+
             }catch (NullPointerException _){}
-        }while (opc != 6 && opc != -1);
+
+        }while (opc != 0 && opc != -1);
     }
 
     /**
@@ -90,12 +97,13 @@ public class Main {
      */
     private static void ejecutarOpcion(int opc){
         switch (opc){
-            case 1 -> listar();
+            case 1 -> listarProductos();
             case 2 -> buscarPorTitulo();
             case 3 -> buscarPorAnyo();
             case 4 -> prestar();
             case 5 -> devolver();
-            case -1 , 6 -> JOptionPane.showMessageDialog(null, Mensajes.SALIR, "Salir", JOptionPane.INFORMATION_MESSAGE);
+            case 6 -> altaUsuario();
+            case -1 , 0 -> JOptionPane.showMessageDialog(null, Mensajes.SALIR, "Salir", JOptionPane.INFORMATION_MESSAGE);
 
             default -> JOptionPane.showMessageDialog(null, Mensajes.OPCION_FUERA_DE_RANGO, "Error", JOptionPane.ERROR_MESSAGE );
         }
@@ -104,7 +112,7 @@ public class Main {
     /**
      * Muestra el listado completo de productos registrados en el catálogo
      */
-    private static void listar(){
+    private static void listarProductos(){
         List<Producto> lista = catalogo.listar();
         mostrar(lista);
     }
@@ -128,36 +136,82 @@ public class Main {
     }
 
     /**
-     *
+     * Permite realizar un préstamo de un producto a un usuario.
      */
     private static void prestar() {
-        List<Producto> productosDisponibles = catalogo.listar().stream()
-                .filter(p -> p instanceof Prestable nuevoProducto && !nuevoProducto.estaPrestado())
-                .toList();
+        List<Producto> productosDisponibles = catalogo.buscarProductosDisponibles();
+
+        // PRODUCTO
+        int id = Input.ingresarId(crearMensaje(productosDisponibles), Mensajes.INGRESAR_ID_PRODUCTO, Mensajes.TITULO_RESERVAR_PRODUCTO);
+        Producto pEncontrado = catalogo.buscarProductoId(id);
+
+        if (pEncontrado == null){ throw new IllegalStateException(Mensajes.ID_NO_ENCONTRADO); }
+
+        // USUARIO
+        List<Usuario> u = usuarios.listar();
+
+        int idUsuario = Input.ingresarId(crearMensaje(u), Mensajes.INGRESAR_ID_USUARIO, Mensajes.TITULO_RESERVAR_PRODUCTO);
+        Usuario uEncontrado = usuarios.buscarUsuario(idUsuario);
+
+        if (uEncontrado == null){
+            throw new IllegalStateException(Mensajes.ID_NO_ENCONTRADO);
+        }
+
+        // PRÉSTAMO
+        Prestable p =  (Prestable) pEncontrado;
+        p.prestar(uEncontrado);
+
+        JOptionPane.showMessageDialog(null, Mensajes.PRESTAMO_EXITO, "Prestamo Realizado", JOptionPane.INFORMATION_MESSAGE );
+
     }
 
     /**
-     *
+     * Permite realizar una devolución de un producto.
      */
     private static void devolver() {
-        System.out.println();
+        List<Producto> productosPrestados = catalogo.buscarProductosReservados();
+
+        // PRODUCTO
+        int id = Input.ingresarId(crearMensaje(productosPrestados), Mensajes.INGRESAR_ID_PRODUCTO, Mensajes.TITULO_RESERVAR_PRODUCTO);
+        Producto pEncontrado = catalogo.buscarProductoId(id);
+
+        if (pEncontrado == null){ throw new IllegalStateException(Mensajes.ID_NO_ENCONTRADO); }
+
+        // DEVOLUCIÓN
+        Prestable p =  (Prestable) pEncontrado;
+        p.devolver();
+
+        JOptionPane.showMessageDialog(null, Mensajes.DEVOLUCION_EXITO, "Prestamo Realizado", JOptionPane.INFORMATION_MESSAGE );
+    }
+
+    private static void altaUsuario(){}
+
+    /**
+     * Muestra una lista de productos o usuarios en una ventana emergente.
+     *
+     * @param lista Lista con los elementos a mostrar
+     * @param <T> Tipo de los elementos contenidos en la lista (Producto o Usuario)
+     */
+    public static <T> void mostrar(List<T> lista){
+
+        List<String> mensaje = crearMensaje(lista);
+
+        JOptionPane.showMessageDialog(null, String.join("\n", mensaje), "Prestamos Registrados", JOptionPane.INFORMATION_MESSAGE);
     }
 
     /**
-     * Crea una nueva lista que contiene la descripción de cada producto. Después la muestra en una ventana emergente.
-     * Si la lista está vacía se lanzará una excepción {@link IllegalStateException}.
+     * Crea una lista que contiene la descripción de cada elemento a mostrar. Si la lista está vacía se lanzará una excepción {@link IllegalStateException}.
      *
-     * @param productos Lista con los productos a mostrar
-     * @throws IllegalStateException Si el título ingresado por el usuario no coincide con el título de algún producto
+     * @param lista Lista con los elementos a mostrar
+     * @param <T> Tipo de los elementos contenidos en la lista (Producto o Usuario)
+     *
+     * @throws IllegalStateException Si no hay elementos que mostrar
+     *
+     * @return Lista con la descripción de cada elemento
      */
-    public static void mostrar(List<Producto> productos){
+    public static <T> List<String> crearMensaje(List<T> lista){
+        if (lista.isEmpty()) throw new IllegalStateException(Mensajes.ERROR_SIN_RESULTADOS);
 
-        if (productos.isEmpty()) throw new IllegalStateException(Mensajes.ERROR_SIN_RESULTADOS);
-
-        List<String> frases = productos.stream()
-                                        .map(p -> (productos.indexOf(p) + 1 )+ ". " +  p.toString())
-                                        .toList();
-
-        JOptionPane.showMessageDialog(null, String.join("\n", frases), "Prestamos Registrados", JOptionPane.INFORMATION_MESSAGE);
+        return lista.stream().map(p -> p.toString()).toList();
     }
 }

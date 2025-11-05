@@ -1,6 +1,7 @@
 package biblioteca.simple.servicios;
 
 import javax.swing.*;
+import java.util.List;
 
 /**
  * Clase que permite ingresar datos al usuario mediante ventanas emergentes de JOptionPane.
@@ -53,24 +54,28 @@ public class Input {
     }
 
     /**
-     * Muestra un cuadro de diálogo para que el usuario elija el tipo de producto.
+     * Muestra un cuadro de diálogo para que el usuario ingrese el ID. Si no ingresa ningún valor
+     * se lanzará una excepción {@link IllegalStateException}.
      *
-     * @return el tipo de producto seleccionado como cadena ("Película", "Libro" o "Videojuegos")
+     * @param mensaje Mensaje con toda la información de productos o usuarios.
+     * @param textoEntrada Texto informativo para ingreso de la información
+     * @param titulo Título de la ventana emergente
+     *
+     * @return El ID ingresado convertido a entero, o -1 si el usuario cancela
+     * @throws IllegalStateException si el ID es null o está vacío
      */
-    public static String ingresarTipo() {
-        String[] tipos = new String[]{"Pelicula", "Libro", "Videojuegos"};
-
-        int posicion_categoria = JOptionPane.showOptionDialog(
+    public static int ingresarId(List<String> mensaje, String textoEntrada, String titulo) {
+        String input = JOptionPane.showInputDialog(
                 null,
-                "Elegir Producto",
-                "Continuar",
-                JOptionPane.DEFAULT_OPTION,
-                JOptionPane.QUESTION_MESSAGE,
-                null,
-                tipos,
-                tipos[0]
+                String.join("\n", mensaje) + "\n\n" + textoEntrada,
+                titulo,
+                JOptionPane.QUESTION_MESSAGE
         );
 
-        return tipos[posicion_categoria];
+        if (input == null || input.isEmpty()) {
+            throw new IllegalStateException("Debe ingresar un id.");
+        }
+
+        return Integer.parseInt(input);
     }
 }

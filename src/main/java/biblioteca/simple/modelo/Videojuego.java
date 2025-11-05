@@ -91,6 +91,7 @@ public class Videojuego extends Producto implements Prestable {
      */
     @Override
     public void devolver() {
+        if (!prestado) throw new IllegalStateException("Película no está prestada.");
 
         this.prestado = false;
         this.prestadoA = null;
@@ -112,12 +113,11 @@ public class Videojuego extends Producto implements Prestable {
      */
     @Override
     public String toString() {
-        return "Videojuego{" +
-                "titulo='" + titulo + '\'' +
-                ", plataforma='" + plataforma + '\'' +
-                ", genero='" + genero + '\'' +
-                ", anyo='" + anyo + '\'' +
-                ", formato=" + formato +
-                '}';
+        return "ID: " + id +
+                " | Título: " + titulo +
+                " | Plataforma: " + plataforma +
+                " | Género: " + genero +
+                " | Año: " + anyo +
+                " | Formato: " + formato;
     }
 }

@@ -1,5 +1,6 @@
 package biblioteca.simple.servicios;
 
+import biblioteca.simple.contratos.Prestable;
 import biblioteca.simple.modelo.Producto;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +24,7 @@ public class Catalogo {
     public void alta(Producto producto) { productos.add(producto); }
 
     /**
-     * Devuelve una copia de la lista con todos los productos del catálogo, para evitar que se pueda la lista.
+     * Devuelve una copia de la lista con todos los productos del catálogo, para evitar que se pueda modificar la lista original.
      *
      * @return Copia de la lista con todos los productos
      */
@@ -51,5 +52,40 @@ public class Catalogo {
         return productos.stream()
                 .filter(producto -> Integer.parseInt(producto.getAnyo()) == anyo)
                 .toList();
+    }
+
+    /**
+     * Busca productos que implementen la interfaz {@link Prestable} y no estén prestados.
+     *
+     * @return Lista con los productos que pueden ser prestados
+     */
+    public List<Producto> buscarProductosDisponibles(){
+        return productos.stream()
+                .filter(p -> p instanceof Prestable nuevoProducto && !nuevoProducto.estaPrestado())
+                .toList();
+    }
+
+    /**
+     * Busca productos que implementen la interfaz {@link Prestable} y que estén prestados.
+     *
+     * @return Lista con los productos que se encuentran prestados
+     */
+    public List<Producto> buscarProductosReservados(){
+        return productos.stream()
+                .filter(p -> p instanceof Prestable nuevoProducto && nuevoProducto.estaPrestado())
+                .toList();
+    }
+
+    /**
+     * Busca un producto por su ID
+     *
+     * @param id ID ingresado
+     *
+     * @return El ID si encuentra el producto o null si no hay coincidencia alguna
+     */
+    public Producto buscarProductoId(int id){
+        return productos.stream()
+                .filter(p -> p.getId() == id)
+                .findFirst().orElse(null);
     }
 }

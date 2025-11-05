@@ -51,4 +51,15 @@ public class Usuario {
      * @param nombre Nuevo nombre del usuario
      */
     public void setNombre(String nombre) { this.nombre = nombre; }
+
+    /**
+     * Devuelve una representación en cadena de texto del Usuario.
+     *
+     * @return Cadena de texto que muestra la información del Usuario
+     */
+    @Override
+    public String toString() {
+        return "ID: " + id +
+                " | Nombre: " + nombre;
+    }
 }
