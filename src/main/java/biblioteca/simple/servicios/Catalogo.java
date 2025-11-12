@@ -2,6 +2,8 @@ package biblioteca.simple.servicios;
 
 import biblioteca.simple.contratos.Prestable;
 import biblioteca.simple.modelo.Producto;
+import biblioteca.simple.modelo.Usuario;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -88,4 +90,14 @@ public class Catalogo {
                 .filter(p -> p.getId() == id)
                 .findFirst().orElse(null);
     }
+
+    /** Vacía la lista de usuarios */
+    public void vaciarListaProductos(){productos.clear(); }
+
+    /**
+     * Importa todos los productos a la lista vacía
+     *
+     * @param productosCargados Lista con todos los productos
+     */
+    public void cargarTodosLosProductos(List<Producto> productosCargados) {productos.addAll(productosCargados);}
 }

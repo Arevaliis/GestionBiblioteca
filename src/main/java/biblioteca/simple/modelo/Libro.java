@@ -13,6 +13,7 @@ import biblioteca.simple.contratos.Prestable;
  * @version 1.0
  */
 public class Libro extends Producto implements Prestable {
+    private String tipo = "Libro";
     private String autor;
     private String isbn;
     private boolean prestado;
@@ -63,6 +64,10 @@ public class Libro extends Producto implements Prestable {
 
     /** Devuelve el ISBN del libro */
     public String getIsbn() { return isbn; }
+
+    /** Devuelve el tipo del libro */
+    @Override
+    public String getTipo() { return tipo; }
 
     /**
      * Presta el libro a un usuario.

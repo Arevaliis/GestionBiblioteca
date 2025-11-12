@@ -2,12 +2,14 @@ package biblioteca.simple.app;
 
 import biblioteca.simple.contratos.Prestable;
 import biblioteca.simple.modelo.*;
-import biblioteca.simple.servicios.Catalogo;
-import biblioteca.simple.servicios.Input;
-import biblioteca.simple.servicios.Mensajes;
-import biblioteca.simple.servicios.Usuarios;
+import biblioteca.simple.servicios.*;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
 import javax.swing.*;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,7 +28,7 @@ public class Main {
      * ejecución del programa hasta que el usuario decida salir.
      */
     public static void main(String[] args) {
-         cargarDatos();
+        cargarDatos();
         menu();
     }
 
@@ -34,33 +36,8 @@ public class Main {
      * Carga inicial de datos del catálogo contiene libros, películas, videojuegos y usuario.
      */
     private static void cargarDatos(){
-        // Libros
-        catalogo.alta(new Libro(1, "1984", "1949", FORMATO.DIGITAL, "George Orwell", "9780451524935"));
-        catalogo.alta(new Libro(2, "El Hobbit", "1937", FORMATO.FISICO, "J.R.R. Tolkien", "9780261102217"));
-        catalogo.alta(new Libro(3, "Cien años de soledad", "1967", FORMATO.FISICO, "Gabriel García Márquez", "9780307474728"));
-        catalogo.alta(new Libro(4, "Don Quijote de la Mancha", "1605", FORMATO.DIGITAL, "Miguel de Cervantes", "9788491050067"));
-        catalogo.alta(new Libro(5, "Fahrenheit 451", "1953", FORMATO.FISICO, "Ray Bradbury", "9781451673319"));
-
-        // Películas
-        catalogo.alta(new Pelicula(6, "Inception", "2010", FORMATO.DIGITAL, 148, "Christopher Nolan"));
-        catalogo.alta(new Pelicula(7, "El Padrino", "1972", FORMATO.FISICO, 175, "Francis Ford Coppola"));
-        catalogo.alta(new Pelicula(8, "Matrix", "1999", FORMATO.DIGITAL, 136, "Lana y Lilly Wachowski"));
-        catalogo.alta(new Pelicula(9, "Parásitos", "2019", FORMATO.FISICO, 132, "Bong Joon-ho"));
-        catalogo.alta(new Pelicula(10, "Interstellar", "2014", FORMATO.DIGITAL, 169, "Christopher Nolan"));
-
-        // Videojuegos
-        catalogo.alta(new Videojuego(11, "The Legend of Zelda: Tears of the Kingdom", "2023", FORMATO.FISICO, "Nintendo Switch", "Aventura"));
-        catalogo.alta(new Videojuego(12, "God of War: Ragnarök", "2022", FORMATO.DIGITAL, "PS5", "Acción"));
-        catalogo.alta(new Videojuego(13, "Starfield", "2023", FORMATO.DIGITAL, "Xbox Series X", "Rol"));
-        catalogo.alta(new Videojuego(14, "Hollow Knight", "2017", FORMATO.DIGITAL, "PC", "Plataformas"));
-        catalogo.alta(new Videojuego(15, "Pokémon Escarlata", "2022", FORMATO.FISICO, "Nintendo Switch", "Rol"));
-
-        // Usuarios
-        usuarios.alta(new Usuario(1, "Ana López"));
-        usuarios.alta(new Usuario(2, "Carlos Pérez"));
-        usuarios.alta(new Usuario(3, "María Gómez"));
-        usuarios.alta(new Usuario(4, "Juan Rodríguez"));
-        usuarios.alta(new Usuario(5, "Lucía Fernández"));
+        importarProductos(false);
+        importarUsuarios(false);
     }
 
     /**
@@ -78,11 +55,9 @@ public class Main {
                 ejecutarOpcion(opc);
 
             }catch (IllegalArgumentException e){
-
                 JOptionPane.showMessageDialog(null, Mensajes.ERROR_DATO_NO_VALIDO, "Error", JOptionPane.ERROR_MESSAGE );
 
             }catch (IllegalStateException e){
-
                 JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE );
 
             }catch (NullPointerException _){}
@@ -103,6 +78,11 @@ public class Main {
             case 4 -> prestar();
             case 5 -> devolver();
             case 6 -> altaUsuario();
+            case 7 -> exportarUsuario();
+            case 8 -> importarUsuarios(true);
+            case 9 -> exportarProductos();
+            case 10 -> importarProductos(true);
+
             case -1 , 0 -> JOptionPane.showMessageDialog(null, Mensajes.SALIR, "Salir", JOptionPane.INFORMATION_MESSAGE);
 
             default -> JOptionPane.showMessageDialog(null, Mensajes.OPCION_FUERA_DE_RANGO, "Error", JOptionPane.ERROR_MESSAGE );
@@ -223,6 +203,99 @@ public class Main {
     public static <T> List<String> crearMensaje(List<T> lista){
         if (lista.isEmpty()) throw new IllegalStateException(Mensajes.ERROR_SIN_RESULTADOS);
 
-        return lista.stream().map(p -> p.toString()).toList();
+        return lista.stream().map(Object::toString).toList();
+    }
+
+    /**
+     * Exporta la lista actual de usuarios a un archivo .json
+     */
+    private static void exportarUsuario(){
+        try {
+
+            PersistenciaUsuario.exportar(usuarios.listar());
+
+            JOptionPane.showMessageDialog(null, Mensajes.EXPORTACION_USUARIOS_EXITO, "Importación Usuarios", JOptionPane.INFORMATION_MESSAGE );
+
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, Mensajes.ERROR_EXPORTACION_USUARIOS,
+                    "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    /**
+     * Importa los usuarios desde un archivo .json
+     */
+    private static void importarUsuarios(boolean mostrarMensaje){
+        try {
+
+            List<Usuario> usuariosCargados = PersistenciaUsuario.importar();
+            usuarios.vaciarListaUsuarios();
+            usuarios.cargarTodosLosUsuarios(usuariosCargados);
+
+            if (mostrarMensaje) {
+                JOptionPane.showMessageDialog(null, Mensajes.IMPORTACION_USUARIOS_EXITO, "Importación Usuarios", JOptionPane.INFORMATION_MESSAGE);
+            }
+
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, Mensajes.ERROR_IMPORTACION_USUARIOS,
+                    "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    /**
+     * Exporta la lista actual de productos a un archivo .json
+     */
+    private static void exportarProductos(){
+        try {
+            PersistenciaProducto.exportar(catalogo.listar());
+            JOptionPane.showMessageDialog(null, Mensajes.EXPORTACION_PRODUCTOS_EXITO, "Exportar Productos", JOptionPane.INFORMATION_MESSAGE);
+
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, Mensajes.ERROR_EXPORTACION_PRODUCTOS, "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    /**
+     * Importa los productos desde un archivo json
+     */
+    private static void importarProductos(boolean mostrarMensaje) {
+        try {
+
+            JsonArray array = PersistenciaProducto.importar();
+
+            if (array.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Archivo json vacío", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            List<Producto> productos = new ArrayList<>();
+
+            for (JsonElement element : array) {
+                JsonObject object = element.getAsJsonObject();
+
+                String tipo = object.get("tipo").getAsString();
+                int id = object.get("id").getAsInt();
+                String titulo = object.get("titulo").getAsString();
+                String anyo = object.get("anyo").getAsString();
+                FORMATO formato = FORMATO.valueOf(object.get("formato").getAsString());
+
+                switch (tipo) {
+                    case "Libro" -> productos.add(new Libro(id, titulo, anyo, formato, object.get("autor").getAsString(), object.get("isbn").getAsString()));
+                    case "Pelicula" -> productos.add(new Pelicula(id, titulo, anyo, formato, object.get("minutosDuracion").getAsInt(), object.get("director").getAsString()));
+                    case "Videojuego" -> productos.add(new Videojuego(id, titulo, anyo, formato, object.get("plataforma").getAsString(), object.get("genero").getAsString()));
+                }
+            }
+
+            catalogo.vaciarListaProductos();
+            catalogo.cargarTodosLosProductos(productos);
+
+            if (mostrarMensaje){
+                JOptionPane.showMessageDialog(null, Mensajes.IMPORTACION_PRODUCTOS_EXITO, "Importar Productos", JOptionPane.INFORMATION_MESSAGE);
+            }
+
+
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, Mensajes.ERROR_IMPORTACION_PRODUCTOS, "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 }

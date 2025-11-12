@@ -57,8 +57,11 @@ public abstract class Producto {
     /** Devuelve el año del producto */
     public String getAnyo() { return anyo; }
 
+    /** Devuelve el tipo del producto */
+    public abstract String getTipo();
+
     /** Devuelve el formato del producto */
-    protected FORMATO getFormato() { return formato; }
+    public FORMATO getFormato() { return formato; }
 
     /**
      * Devuelve una representación en cadena de texto del producto.

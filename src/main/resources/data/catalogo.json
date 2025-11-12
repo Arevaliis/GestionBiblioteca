@@ -1,0 +1,152 @@
+[
+  {
+    "tipo": "Libro",
+    "autor": "George Orwell",
+    "isbn": "9780451524935",
+    "prestado": false,
+    "id": 1,
+    "titulo": "1984",
+    "anyo": "1949",
+    "formato": "DIGITAL"
+  },
+  {
+    "tipo": "Libro",
+    "autor": "J.R.R. Tolkien",
+    "isbn": "9780261102217",
+    "prestado": false,
+    "id": 2,
+    "titulo": "El Hobbit",
+    "anyo": "1937",
+    "formato": "FISICO"
+  },
+  {
+    "tipo": "Libro",
+    "autor": "Gabriel García Márquez",
+    "isbn": "9780307474728",
+    "prestado": false,
+    "id": 3,
+    "titulo": "Cien años de soledad",
+    "anyo": "1967",
+    "formato": "FISICO"
+  },
+  {
+    "tipo": "Libro",
+    "autor": "Miguel de Cervantes",
+    "isbn": "9788491050067",
+    "prestado": false,
+    "id": 4,
+    "titulo": "Don Quijote de la Mancha",
+    "anyo": "1605",
+    "formato": "DIGITAL"
+  },
+  {
+    "tipo": "Libro",
+    "autor": "Ray Bradbury",
+    "isbn": "9781451673319",
+    "prestado": false,
+    "id": 5,
+    "titulo": "Fahrenheit 451",
+    "anyo": "1953",
+    "formato": "FISICO"
+  },
+  {
+    "tipo": "Pelicula",
+    "director": "Christopher Nolan",
+    "minutosDuracion": 148,
+    "prestado": false,
+    "id": 6,
+    "titulo": "Inception",
+    "anyo": "2010",
+    "formato": "DIGITAL"
+  },
+  {
+    "tipo": "Pelicula",
+    "director": "Francis Ford Coppola",
+    "minutosDuracion": 175,
+    "prestado": false,
+    "id": 7,
+    "titulo": "El Padrino",
+    "anyo": "1972",
+    "formato": "FISICO"
+  },
+  {
+    "tipo": "Pelicula",
+    "director": "Lana y Lilly Wachowski",
+    "minutosDuracion": 136,
+    "prestado": false,
+    "id": 8,
+    "titulo": "Matrix",
+    "anyo": "1999",
+    "formato": "DIGITAL"
+  },
+  {
+    "tipo": "Pelicula",
+    "director": "Bong Joon-ho",
+    "minutosDuracion": 132,
+    "prestado": false,
+    "id": 9,
+    "titulo": "Parásitos",
+    "anyo": "2019",
+    "formato": "FISICO"
+  },
+  {
+    "tipo": "Pelicula",
+    "director": "Christopher Nolan",
+    "minutosDuracion": 169,
+    "prestado": false,
+    "id": 10,
+    "titulo": "Interstellar",
+    "anyo": "2014",
+    "formato": "DIGITAL"
+  },
+  {
+    "tipo": "Videojuego",
+    "plataforma": "Nintendo Switch",
+    "genero": "Aventura",
+    "prestado": false,
+    "id": 11,
+    "titulo": "The Legend of Zelda: Tears of the Kingdom",
+    "anyo": "2023",
+    "formato": "FISICO"
+  },
+  {
+    "tipo": "Videojuego",
+    "plataforma": "PS5",
+    "genero": "Acción",
+    "prestado": false,
+    "id": 12,
+    "titulo": "God of War: Ragnarök",
+    "anyo": "2022",
+    "formato": "DIGITAL"
+  },
+  {
+    "tipo": "Videojuego",
+    "plataforma": "Xbox Series X",
+    "genero": "Rol",
+    "prestado": false,
+    "id": 13,
+    "titulo": "Starfield",
+    "anyo": "2023",
+    "formato": "DIGITAL"
+  },
+  {
+    "tipo": "Videojuego",
+    "plataforma": "PC",
+    "genero": "Plataformas",
+    "prestado": false,
+    "id": 14,
+    "titulo": "Hollow Knight",
+    "anyo": "2017",
+    "formato": "DIGITAL"
+  },
+  {
+    "tipo": "Videojuego",
+    "plataforma": "Nintendo Switch",
+    "genero": "Rol",
+    "prestado": false,
+    "id": 15,
+    "titulo": "Pokémon Escarlata",
+    "anyo": "2022",
+    "formato": "FISICO"
+  }
+]

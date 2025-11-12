@@ -42,4 +42,14 @@ public class Usuarios {
                 .findFirst()
                 .orElse(null);
     }
+
+    /** Vacía la lista de usuarios */
+    public void vaciarListaUsuarios(){ usuarios.clear(); }
+
+    /**
+     * Importa todos los usuarios a la lista vacía
+     *
+     * @param usuariosCargados Lista con todos los usuarios
+     */
+    public void cargarTodosLosUsuarios(List<Usuario> usuariosCargados){ usuarios.addAll(usuariosCargados); }
 }

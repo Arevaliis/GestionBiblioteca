@@ -17,6 +17,10 @@ public class Mensajes {
                     4. Prestar
                     5. Devolver
                     6. Alta Usuario
+                    7. Exportar Usuarios
+                    8. Importar Usuarios
+                    9. Exportar Catalogo
+                    10. Importar Catalogo
                     0. Salir
             
             """;
@@ -62,5 +66,29 @@ public class Mensajes {
 
     /** Título de la ventana emergente utilizada para buscar un producto por título. */
     public static final String TITULO_BUSCAR_TITULO = "Buscar por Título";
+
+    /** Mensaje mostrado cuando la exportación de usuarios se realiza correctamente. */
+    public static final String EXPORTACION_USUARIOS_EXITO = "Usuarios exportados con éxito";
+
+    /** Mensaje mostrado cuando la importación de usuarios se realiza correctamente. */
+    public static final String IMPORTACION_USUARIOS_EXITO = "Usuarios cargados con éxito";
+
+    /** Mensaje mostrado cuando ocurre un error durante la exportación de usuario. */
+    public static final String ERROR_EXPORTACION_USUARIOS = "Error durante la exportación de usuarios.";
+
+    /** Mensaje mostrado cuando ocurre un error durante la importación de usuarios. */
+    public static final String ERROR_IMPORTACION_USUARIOS = "Error durante la importación de usuarios.";
+
+    /** Mensaje mostrado cuando la exportación de productos se realiza correctamente. */
+    public static final String EXPORTACION_PRODUCTOS_EXITO = "Productos exportados con éxito";
+
+    /** Mensaje mostrado cuando la importación de productos se realiza correctamente. */
+    public static final String IMPORTACION_PRODUCTOS_EXITO = "Productos cargados con éxito";
+
+    /** Mensaje mostrado cuando ocurre un error durante la exportación de productos. */
+    public static final String ERROR_EXPORTACION_PRODUCTOS = "Error durante la exportación de productos.";
+
+    /** Mensaje mostrado cuando ocurre un error durante la importación de productos. */
+    public static final String ERROR_IMPORTACION_PRODUCTOS = "Error durante la importación de productos.";
 
 }

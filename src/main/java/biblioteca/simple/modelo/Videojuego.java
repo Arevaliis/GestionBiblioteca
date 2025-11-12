@@ -13,7 +13,7 @@ import biblioteca.simple.contratos.Prestable;
  * @version 1.0
  */
 public class Videojuego extends Producto implements Prestable {
-
+    private String tipo = "Videojuego";
     private String plataforma;
     private String genero;
     private boolean prestado;
@@ -67,6 +67,10 @@ public class Videojuego extends Producto implements Prestable {
     public String getGenero() {
         return genero;
     }
+
+    /** Devuelve el tipo del videojuego */
+    @Override
+    public String getTipo() { return tipo; }
 
     /**
      * Presta el videojuego a un usuario.

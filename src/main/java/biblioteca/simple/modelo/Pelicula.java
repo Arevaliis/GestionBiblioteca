@@ -13,7 +13,7 @@ import biblioteca.simple.contratos.Prestable;
  * @version 1.0
  */
 public class Pelicula extends Producto implements Prestable {
-
+    private String tipo = "Pelicula";
     private String director;
     private int minutosDuracion;
     private boolean prestado;
@@ -63,6 +63,10 @@ public class Pelicula extends Producto implements Prestable {
 
     /** Devuelve los minutos de duración de la película */
     public int getMinutosDuracion() { return minutosDuracion; }
+
+    /** Devuelve el tipo de la película */
+    @Override
+    public String getTipo() { return tipo; }
 
     /**
      * Presta la película a un usuario.
