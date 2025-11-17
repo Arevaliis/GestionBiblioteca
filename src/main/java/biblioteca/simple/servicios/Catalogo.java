@@ -2,7 +2,6 @@ package biblioteca.simple.servicios;
 
 import biblioteca.simple.contratos.Prestable;
 import biblioteca.simple.modelo.Producto;
-import biblioteca.simple.modelo.Usuario;
 
 import java.util.ArrayList;
 import java.util.List;

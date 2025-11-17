@@ -1,5 +1,7 @@
 package biblioteca.simple.modelo;
 
+import java.util.Objects;
+
 /**
  * Clase abstracta que representa un producto
  *
@@ -76,5 +78,29 @@ public abstract class Producto {
                 ", anyo='" + anyo + '\'' +
                 ", formato=" + formato +
                 '}';
+    }
+
+    /**
+     * Compara si dos instancias de la clase Producto son iguales.
+     * Dos productos se consideran iguales si tienen el mismo id.
+     *
+     * @param o Objeto a comparar
+     * @return True si son la misma instancia, False en caso contrario
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Producto producto = (Producto) o;
+        return id == producto.id;
+    }
+
+    /**
+     * Calcula el código hash del producto.
+     *
+     * @return Código hash correspondiente al ID del producto.
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
     }
 }

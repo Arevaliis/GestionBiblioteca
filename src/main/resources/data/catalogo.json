@@ -3,7 +3,11 @@
     "tipo": "Libro",
     "autor": "George Orwell",
     "isbn": "9780451524935",
-    "prestado": false,
+    "prestado": true,
+    "prestadoA": {
+      "id": 1,
+      "nombre": "Ana López"
+    },
     "id": 1,
     "titulo": "1984",
     "anyo": "1949",

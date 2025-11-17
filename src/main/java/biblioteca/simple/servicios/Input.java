@@ -24,7 +24,7 @@ public class Input {
     }
 
     /**
-     *  Muestra un cuadro de diálogo para que el usuario ingrese un texto  título o nombre). Si no ingresa ningún valor se lanzará una excepción {@link IllegalStateException}.
+     *  Muestra un cuadro de diálogo para que el usuario ingrese un texto título o nombre). Si no ingresa ningún valor se lanzará una excepción {@link IllegalStateException}.
      *
      * @param mensaje Texto que se mostrará antes del campo de entrada
      * @param titulo título de la ventana emergente
@@ -36,7 +36,7 @@ public class Input {
     public static String ingresarTexto(String mensaje, String titulo) {
         String entrada = JOptionPane.showInputDialog(null, mensaje, titulo, JOptionPane.QUESTION_MESSAGE);
 
-        if (entrada == null || entrada.isEmpty()) { throw new IllegalStateException("Debe ingresar un valor."); }
+        if (entrada.isEmpty()) { throw new IllegalStateException("Debe ingresar un valor."); }
 
         return entrada;
     }
@@ -75,7 +75,7 @@ public class Input {
                 JOptionPane.QUESTION_MESSAGE
         );
 
-        if (input == null || input.isEmpty()) {
+        if (input.isEmpty()) {
             throw new IllegalStateException("Debe ingresar un id.");
         }
 
@@ -90,7 +90,7 @@ public class Input {
     public static boolean confirmarAgregarNuevoUsuario(){
         int opcion = JOptionPane.showConfirmDialog(
                 null,
-                "¿Desea agregar al nuevo usuario?",
+                "¿Desea agregar un nuevo usuario?",
                 "Agregar Usuario",
                 JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE
@@ -98,4 +98,15 @@ public class Input {
 
         return 0 == opcion;
     }
+
+    /**
+     * Comprueba que el texto ingresado por el usuario no contenga ningún número.
+     *
+     * @param palabra Texto ingresado por el usuario.
+     * @return True si contiene algún número, False en caso contrario
+     */
+    public static boolean isNumeric(String palabra){
+        return palabra.matches(".*\\d.*");
+    }
+
 }

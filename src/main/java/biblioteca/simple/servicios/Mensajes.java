@@ -91,4 +91,9 @@ public class Mensajes {
     /** Mensaje mostrado cuando ocurre un error durante la importación de productos. */
     public static final String ERROR_IMPORTACION_PRODUCTOS = "Error durante la importación de productos.";
 
+    /** Mensaje mostrado cuando el archivo json está vacío. */
+    public static final String JSON_VACIO = "Archivo json vacío";
+
+    /** Mensaje de error mostrado cuando se ingresa algún número en el nombre del usuario */
+    public static final String ERROR_ALTA_USUARIO = "El nombre de un usuario no puede contener números";
 }

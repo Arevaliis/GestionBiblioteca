@@ -24,17 +24,15 @@ public class Main {
     private static final Usuarios usuarios = new Usuarios();
 
     /**
-     * Metodo principal del programa, se encarga de cargar los datos dentro del catálogo y mantiene la
-     * ejecución del programa hasta que el usuario decida salir.
+     * Metodo principal del programa, se encarga de cargar los datos de productos y usuarios y
+     * mantiene la ejecución del programa hasta que el usuario decida salir.
      */
     public static void main(String[] args) {
         cargarDatos();
         menu();
     }
 
-    /**
-     * Carga inicial de datos del catálogo contiene libros, películas, videojuegos y usuario.
-     */
+    /** Carga inicial de datos. Contiene libros, películas, videojuegos y usuario. */
     private static void cargarDatos(){
         importarProductos(false);
         importarUsuarios(false);
@@ -49,18 +47,19 @@ public class Main {
         int opc = 0;
 
         do {
-            try{
+            try {
 
                 opc = Input.elegir_opcion(Mensajes.MENU_PRINCIPAL, "Menu");
                 ejecutarOpcion(opc);
 
-            }catch (IllegalArgumentException e){
-                JOptionPane.showMessageDialog(null, Mensajes.ERROR_DATO_NO_VALIDO, "Error", JOptionPane.ERROR_MESSAGE );
+            } catch (IllegalArgumentException e) {
+                JOptionPane.showMessageDialog(null, Mensajes.ERROR_DATO_NO_VALIDO, "Error", JOptionPane.ERROR_MESSAGE);
 
-            }catch (IllegalStateException e){
-                JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE );
+            } catch (NullPointerException _) { // Captura la excepción sin mostrar ningún mensaje. Esto evita errores cuando el usuario pulsa en “Cancel” o en "X".
 
-            }catch (NullPointerException _){}
+            } catch (Exception ex){ // Captura la excepción IllegalStateException y aquellas que no haya tenido en cuenta
+                JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
 
         }while (opc != 0 && opc != -1);
     }
@@ -89,35 +88,27 @@ public class Main {
         }
     }
 
-    /**
-     * Muestra el listado completo de productos registrados en el catálogo
-     */
+    /** Muestra el listado completo de productos registrados en el catálogo */
     private static void listarProductos(){
         List<Producto> lista = catalogo.listar();
         mostrar(lista);
     }
 
-    /**
-     * Muestra los productos cuyo título contiene la palabra ingresada por el usuario.
-     */
+    /** Muestra los productos cuyo título contiene la palabra ingresada por el usuario. */
     private static void buscarPorTitulo() {
         String titulo = Input.ingresarTexto(Mensajes.INGRESAR_TITULO_BUSQUEDA, Mensajes.TITULO_BUSCAR_TITULO);
         List<Producto> lista = catalogo.buscar(titulo);
         mostrar(lista);
     }
 
-    /**
-     * Muestra los productos cuyo año coincide con el año ingresado por el usuario.
-     */
+    /** Muestra los productos cuyo año coincide con el año ingresado por el usuario. */
     private static void buscarPorAnyo() {
         int anyo = Input.ingresarAnyo();
         List<Producto> lista = catalogo.buscar(anyo);
         mostrar(lista);
     }
 
-    /**
-     * Permite realizar un préstamo de un producto a un usuario.
-     */
+    /** Permite realizar un préstamo de un producto a un usuario. */
     private static void prestar() {
         List<Producto> productosDisponibles = catalogo.buscarProductosDisponibles();
 
@@ -148,9 +139,7 @@ public class Main {
 
     }
 
-    /**
-     * Permite realizar una devolución de un producto.
-     */
+    /** Permite realizar una devolución de un producto. */
     private static void devolver() {
         List<Producto> productosPrestados = catalogo.buscarProductosReservados();
 
@@ -167,23 +156,23 @@ public class Main {
         JOptionPane.showMessageDialog(null, Mensajes.DEVOLUCION_EXITO, Mensajes.DEVOLUCION_EXITO, JOptionPane.INFORMATION_MESSAGE );
     }
 
-    /**
-     * Permite crear un nuevo usuario
-     */
+    /** Permite crear un nuevo usuario */
     private static void altaUsuario(){
-        int id = usuarios.listar().size() + 1;
+        int id = usuarios.listar().size() + 1; // Permite automatizar el ingreso del ID y seguir en orden.
         String nombre = Input.ingresarTexto(Mensajes.INGRESAR_NOMBRE_USUARIO, Mensajes.TITULO_ALTA_USUARIO);
 
-        usuarios.alta(new Usuario(id, nombre));
+        if (!Input.isNumeric(nombre)){ usuarios.alta(new Usuario(id, nombre)); return;}
+
+        JOptionPane.showMessageDialog(null, Mensajes.ERROR_ALTA_USUARIO, "Error Alta Usuario", JOptionPane.ERROR_MESSAGE );
+
     }
 
     /**
      * Muestra una lista de productos o usuarios en una ventana emergente.
      *
      * @param lista Lista con los elementos a mostrar
-     * @param <T> Tipo de los elementos contenidos en la lista (Producto o Usuario)
      */
-    public static <T> void mostrar(List<T> lista){
+    public static void mostrar(List<?> lista){
 
         List<String> mensaje = crearMensaje(lista);
 
@@ -194,27 +183,24 @@ public class Main {
      * Crea una lista que contiene la descripción de cada elemento a mostrar. Si la lista está vacía se lanzará una excepción {@link IllegalStateException}.
      *
      * @param lista Lista con los elementos a mostrar
-     * @param <T> Tipo de los elementos contenidos en la lista (Producto o Usuario)
      *
      * @throws IllegalStateException Si no hay elementos que mostrar
      *
      * @return Lista con la descripción de cada elemento
      */
-    public static <T> List<String> crearMensaje(List<T> lista){
+    public static List<String> crearMensaje(List<?> lista){
         if (lista.isEmpty()) throw new IllegalStateException(Mensajes.ERROR_SIN_RESULTADOS);
 
         return lista.stream().map(Object::toString).toList();
     }
 
-    /**
-     * Exporta la lista actual de usuarios a un archivo .json
-     */
+    /** Exporta la lista actual de usuarios a un archivo tipo json */
     private static void exportarUsuario(){
         try {
 
             PersistenciaUsuario.exportar(usuarios.listar());
 
-            JOptionPane.showMessageDialog(null, Mensajes.EXPORTACION_USUARIOS_EXITO, "Importación Usuarios", JOptionPane.INFORMATION_MESSAGE );
+            JOptionPane.showMessageDialog(null, Mensajes.EXPORTACION_USUARIOS_EXITO, "Exportación Usuarios", JOptionPane.INFORMATION_MESSAGE );
 
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, Mensajes.ERROR_EXPORTACION_USUARIOS,
@@ -222,9 +208,7 @@ public class Main {
         }
     }
 
-    /**
-     * Importa los usuarios desde un archivo .json
-     */
+    /** Importa los usuarios desde un archivo tipo json */
     private static void importarUsuarios(boolean mostrarMensaje){
         try {
 
@@ -242,9 +226,7 @@ public class Main {
         }
     }
 
-    /**
-     * Exporta la lista actual de productos a un archivo .json
-     */
+    /** Exporta la lista actual de productos a un archivo tipo json */
     private static void exportarProductos(){
         try {
             PersistenciaProducto.exportar(catalogo.listar());
@@ -255,16 +237,14 @@ public class Main {
         }
     }
 
-    /**
-     * Importa los productos desde un archivo json
-     */
+    /** Importa los productos desde un archivo tipo json */
     private static void importarProductos(boolean mostrarMensaje) {
         try {
 
             JsonArray array = PersistenciaProducto.importar();
 
             if (array.isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Archivo json vacío", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, Mensajes.JSON_VACIO, "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
